@@ -1,0 +1,1 @@
+web: sh -lc "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn pdf_summari.wsgi:application --bind 0.0.0.0:$PORT"
