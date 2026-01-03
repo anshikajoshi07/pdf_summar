@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import PDFDocument
 from .utils import extract_text_from_pdf, generate_summary
 import logging
+from django.db.utils import OperationalError as DBOperationalError
 
 logger = logging.getLogger(__name__)
 
@@ -32,8 +33,13 @@ def index(request):
             message = f"Error processing PDF: {e}"
 
     # If no new upload, show the most recent saved PDF (if any)
-    if not latest_pdf:
-        latest_pdf = PDFDocument.objects.last()
+    try:
+        if not latest_pdf:
+            latest_pdf = PDFDocument.objects.last()
+    except DBOperationalError:
+        # Database tables may not be created yet (e.g., migrations not applied)
+        message = message or "Database not initialized: run `python manage.py migrate` to create tables."
+        latest_pdf = None
 
     latest_summary_points = None
     if latest_pdf and latest_pdf.summary:
