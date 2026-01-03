@@ -30,4 +30,4 @@ python manage.py runserver
 ```
 
 ## Deploy
-See `DEPLOY.md` for GitHub and hosting instructions.
+See `DEPLOY_TO_RENDER.md` for a sample Render deployment guide and instructions.
