@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: pdf-summar-web
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
+    startCommand: gunicorn pdf_summari.wsgi:application
+    repo: https://github.com/anshikajoshi07/pdf_summari.git
+  - type: postgres
+    name: pdf-summar-db
+    plan: starter
