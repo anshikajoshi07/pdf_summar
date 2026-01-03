@@ -1,0 +1,187 @@
+{%load static%}
+<head>
+    <style>
+        /* 🌌 RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 🌌 BACKGROUND */
+body {
+  height: 100vh;
+  background: radial-gradient(ellipse at bottom, #0b1026 0%, #000 100%);
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
+
+/* 🌟 STAR FIELD */
+.stars, .stars2, .stars3 {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow:
+    50px 100px white, 120px 300px white, 200px 500px white,
+    300px 200px white, 400px 600px white, 500px 100px white,
+    650px 450px white, 800px 300px white, 900px 700px white,
+    1100px 150px white, 1300px 500px white;
+  animation: twinkle 6s infinite ease-in-out alternate,
+             fall 20s linear infinite;
+}
+
+/* ⭐ MEDIUM STARS */
+.stars2 {
+  width: 3px;
+  height: 3px;
+  opacity: 0.7;
+  animation-duration: 8s, 30s;
+}
+
+/* ⭐ BIG SHINY STARS */
+.stars3 {
+  width: 4px;
+  height: 4px;
+  opacity: 0.5;
+  filter: drop-shadow(0 0 8px white);
+  animation-duration: 10s, 40s;
+}
+
+/* ✨ SHINE EFFECT */
+@keyframes twinkle {
+  0% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.3; transform: scale(1); }
+}
+
+/* 🌠 GRAVITY FALL */
+@keyframes fall {
+  from { transform: translateY(-100px); }
+  to { transform: translateY(120vh); }
+}
+
+/* 🌟 CONTENT */
+.container {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.container h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px #4cc9f0;
+}
+
+.container p {
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+/* from  */
+/* 🧊 GLASS CARD */
+.container form {
+    margin-top: 30px;
+    padding: 30px 25px;
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 📝 TITLE */
+.container h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 25px rgba(76, 201, 240, 0.8);
+}
+
+/* 📄 SUBTEXT */
+.container p {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    max-width: 500px;
+}
+
+/* 📂 FILE INPUT */
+.container input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 22px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    cursor: pointer;
+}
+
+/* 🚀 BUTTON */
+.container button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    color: white;
+    background: linear-gradient(135deg, #4cc9f0, #4361ee);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(76, 201, 240, 0.6);
+}
+
+/* ✨ BUTTON HOVER */
+.container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 35px rgba(76, 201, 240, 1);
+}
+
+/* 🔘 BUTTON ACTIVE */
+.container button:active {
+    transform: scale(0.97);
+}
+</style>
+
+
+
+
+
+</head>
+<body>
+
+<!-- 🌌 STARS -->
+<div class="stars"></div>
+<div class="stars stars2"></div>
+<div class="stars stars3"></div>
+   
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>📄 PDF Summarizer</h1>
+        <p>Upload your PDF and get a short summary instantly</p>
+
+        <form method="post" enctype="multipart/form-data" action="">
+            
+            {% csrf_token %}
+            <input type="file" name="pdf" accept=".pdf" required>
+            <button type="submit">Summarize</button>
+        </form>
+
+        {% if message %}
+            <div class="status" style="margin-top:16px;color:#bfe9ff;">{{ message }}</div>
+        {% endif %}
+
+    </div>
+</body>
+</html>
