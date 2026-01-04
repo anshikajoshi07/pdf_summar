@@ -24,7 +24,7 @@ jobs:
           pytest -q || true
 
   deploy-to-render:
-    if: secrets.RENDER_API_KEY && secrets.RENDER_SERVICE_ID
+    if: ${{ secrets.RENDER_API_KEY && secrets.RENDER_SERVICE_ID }}
     runs-on: ubuntu-latest
     needs: test
     steps:
