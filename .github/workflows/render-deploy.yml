@@ -3,6 +3,7 @@ name: CI & Optional Render Deploy
 on:
   push:
     branches: [ main ]
+  workflow_dispatch: {}
 
 jobs:
   test:
